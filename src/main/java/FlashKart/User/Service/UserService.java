@@ -39,6 +39,12 @@ public class UserService {
             }
             else return ResponseEntity.notFound().build();
         }
-
-
+        public ResponseEntity deleteUser(String Email) {
+            Optional<UserEntity>optional=userRepository.findByEmail(Email);
+            if(optional.isPresent()) {
+                userRepository.delete(optional.get());
+                return ResponseEntity.ok(ConvertToDTO.userResponseDTO(optional.get()));
+            }
+            return ResponseEntity.notFound().build();
+        }
 }
